@@ -19,7 +19,7 @@ const features = [
   {
     icon: "¤",
     title: "EUR, USD and CHF, side by side",
-    body: "Each asset keeps its own currency. Totals convert to a base currency you pick, with the ECB's daily reference rates a single opt-in away.",
+    body: "Each asset keeps its own currency. Totals convert to a base currency you pick, with the ECB's working-day reference rates a single opt-in away.",
   },
   {
     icon: "▤",
@@ -67,7 +67,7 @@ const steps = [
     <title>FinanceTracker — local-first portfolio tracking for macOS</title>
     <meta
       name="description"
-      content="A native macOS app that tracks what you own over time: snapshots, multi-currency totals, performance and an optional AI assistant. Local-first, single user, MIT."
+      content="A native macOS app that tracks what you own over time: snapshots, multi-currency totals, performance and an optional assistant. Local-first, MIT."
     />
     <link rel="icon" href={url("favicon.svg")} type="image/svg+xml" />
     <link rel="canonical" href={url("")} />
@@ -80,8 +80,23 @@ const steps = [
     />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:alt" content="The FinanceTracker dashboard: portfolio value, allocation and history" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:image" content={ogImage} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "FinanceTracker",
+        url: new URL(base, Astro.site ?? "https://juliendf.github.io").href,
+        downloadUrl: "https://github.com/juliendf/FinanceTrackerApp/releases/latest",
+        applicationCategory: "FinanceApplication",
+        operatingSystem: "macOS 11 or later, Apple silicon",
+        softwareVersion: version,
+        license: "https://github.com/juliendf/FinanceTrackerApp/blob/main/LICENSE",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      })}
+    />
   </head>
   <body>
     <div class="page">
@@ -105,17 +120,18 @@ const steps = [
             <p class="eyebrow">
               <span class="eyebrow-plain">macOS · Apple silicon · v{version} · MIT</span>
             </p>
-            <h1>Know what you own,<br /><em>and what it is worth.</em></h1>
+            <h1>Know what you own,<br /><span class="accent">and what it is worth.</span></h1>
             <p class="lede">
-              Track your wealth — bank, broker, pension, wallet, etc. — in one place, and see how it evolves over
-              time. Use the AI feature to get insights built entirely around your profile, goals and memories.
-              Any LLM provider, hosted or local. No budgets, no bank connectors, no account to create.
+              Track your wealth — bank, broker, pension, wallet — in one place, and see how it evolves over
+              time. An optional assistant reads those figures and answers around your profile and goals, on a
+              model from your Mac or a provider of your own. No budgets, no bank connectors, no account to create.
             </p>
             <div class="actions">
               <a class="btn primary" href="https://github.com/juliendf/FinanceTrackerApp/releases/latest">
                 Download for macOS
               </a>
               <a class="btn ghost" href={url("start/install/")}>How to install</a>
+              <a class="btn ghost" href={url("start/first-hour/")}>Start here</a>
             </div>
 
             <div class="hero-facts">
@@ -124,8 +140,8 @@ const steps = [
                 <span>Local or remote LLMs</span>
               </div>
               <div>
-                <strong>Local SQLite file</strong>
-                <span>No account, no telemetry, no server</span>
+                <strong>Your data, on your Mac</strong>
+                <span>One SQLite file, no account, no server</span>
               </div>
               <div>
                 <strong>EUR, USD, CHF</strong>
@@ -152,7 +168,7 @@ const steps = [
             <p class="alpha-text">
               The app is pre-1.0 and under active development: features move, bugs happen, and a bad
               import can leave your data in a state you did not want. Take a backup from{" "}
-              <strong>Settings → Data &amp; Backup</strong> and keep a copy of the JSON export
+              <strong>Settings → Data &amp; Backup</strong> and keep a copy of that backup
               somewhere else.
             </p>
           </div>
@@ -241,9 +257,9 @@ const steps = [
             <p>There is no server to log in to and no analytics to opt out of.</p>
             <ul>
               <li>
-                Two things touch the network, both on request: the European Central Bank rates file is
-                <em>downloaded</em> on working days and sends nothing about you, and AI requests go only to the
-                provider you configure.
+                Three requests can leave the Mac, and each one is yours to trigger: the European Central Bank
+                rates file is <em>downloaded</em> on working days and sends nothing about you, AI requests go
+                only to the provider you configure, and the update check runs when you press it.
               </li>
               <li>API keys live in the macOS Keychain, bound to the endpoint they were entered for.</li>
               <li>Backups are plain JSON. You can read them, diff them and keep them forever.</li>
@@ -263,8 +279,8 @@ const steps = [
         <section class="docs-teaser">
           <h2>Read before you trust it</h2>
           <p class="docs-lede">
-            The guide is written against the shipped build, screen by screen. Start with the concepts, then the
-            two pages most people need first.
+            The guide is written against the shipped build, screen by screen. Start with the concepts, then
+            install it and record your first values.
           </p>
           <div class="doc-cards">
             <a class="doc-card" href={url("start/what-it-is/")}>
@@ -297,7 +313,7 @@ const steps = [
           <span>FinanceTracker</span>
         </div>
         <nav aria-label="Footer">
-          <a href={url("start/why/")}>Documentation</a>
+          <a href={url("start/what-it-is/")}>Documentation</a>
           <a href={url("start/why/")}>Why this exists</a>
           <a href="https://github.com/juliendf/FinanceTrackerApp/releases">Releases</a>
           <a href="https://github.com/juliendf/FinanceTrackerApp/blob/main/docs/CHANGELOG.md">Changelog</a>
@@ -430,8 +446,7 @@ const steps = [
     text-wrap: balance;
   }
 
-  h1 em {
-    font-style: normal;
+  h1 .accent {
     color: var(--accent);
   }
 
