@@ -118,6 +118,37 @@ describe("SecurityPage", () => {
     );
   });
 
+  it("turns the lock off without a PIN prompt when no PIN is stored", async () => {
+    // Restored backup or deleted Keychain item: the setting says on, the Keychain
+    // has nothing. Rust would refuse a clear without the PIN it does not hold, so
+    // the toggle just goes off.
+    repo.getAllSettings.mockResolvedValue({
+      base_currency: "CHF",
+      lock_enabled: true,
+      lock_idle_minutes: "5",
+    });
+    invoke.mockImplementation(async (command: string) => {
+      if (command === "app_lock_status") return { pinSet: false };
+      throw new Error(`unexpected command ${command}`);
+    });
+
+    renderPage();
+
+    const toggle = (await screen.findByRole("switch")) as HTMLInputElement;
+    await waitFor(() => expect(toggle.checked).toBe(true));
+
+    await userEvent.click(toggle);
+
+    await waitFor(() =>
+      expect(repo.setSetting).toHaveBeenCalledWith("lock_enabled", false),
+    );
+    expect(screen.queryByLabelText("Current PIN")).toBeNull();
+    expect(invoke).not.toHaveBeenCalledWith(
+      "app_lock_clear",
+      expect.anything(),
+    );
+  });
+
   it("changes the delay with one setting write", async () => {
     invoke.mockResolvedValue({ pinSet: false });
 

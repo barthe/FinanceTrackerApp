@@ -82,8 +82,14 @@ export function SecurityPage() {
       // setting): turning it back on needs no new one.
       if (pinSet) setEnabled(true);
       else setPrompt({ kind: "enable" });
-    } else {
+    } else if (pinSet) {
+      // A PIN exists: removing it asks for the current one, so the setting cannot
+      // be flipped by whoever happens to sit down.
       setPrompt({ kind: "disable" });
+    } else {
+      // Nothing to demand: the Keychain has no PIN (a restored backup, a deleted
+      // item), and Rust would refuse a `app_lock_clear` without one. Just go off.
+      setEnabled(false);
     }
   };
 

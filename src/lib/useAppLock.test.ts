@@ -149,6 +149,28 @@ describe("useAppLock", () => {
     hasFocus.mockRestore();
   });
 
+  it("locks when focus returns after the window was away longer than the delay", async () => {
+    const { result } = renderHook(() => useAppLock({ enabled: true, idleMinutes: 1 }));
+    await settle();
+    await act(async () => {
+      await result.current.unlock(SAMPLE_PIN);
+    });
+    expect(result.current.phase).toBe("unlocked");
+
+    // The away time is measured against the moment the window lost focus, not
+    // against the moment it came back: the handler resets the timestamps after
+    // deciding, so a long absence locks immediately on return. `setSystemTime`
+    // moves the clock without firing the ticker, as a suspended background
+    // webview would not, so only the focus handler can lock here.
+    act(() => {
+      window.dispatchEvent(new Event("blur"));
+      vi.setSystemTime(Date.now() + 61_000);
+      window.dispatchEvent(new Event("focus"));
+    });
+
+    expect(result.current.phase).toBe("locked");
+  });
+
   it("never auto-locks when the delay is zero", async () => {
     const { result } = renderHook(() => useAppLock({ enabled: true, idleMinutes: 0 }));
     await settle();

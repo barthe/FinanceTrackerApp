@@ -122,11 +122,14 @@ export function useAppLock({
       if (unfocusedAt.current === null) unfocusedAt.current = Date.now();
     };
     const onFocus = () => {
+      // The window may have been away for longer than the delay: the decision is
+      // made against the timestamp recorded before focus state is cleared, never
+      // against the freshly reset one, or the away time would never count.
+      const now = Date.now();
+      const awaySince = unfocusedAt.current ?? lastActivity.current;
       unfocusedAt.current = null;
       markActive();
-      // The window may have been away for longer than the delay: do not wait for
-      // the next tick to hide the data.
-      check();
+      if (isIdle(now, awaySince, idleMinutes)) lock();
     };
 
     const activity = ["pointerdown", "keydown", "wheel", "touchstart"] as const;
