@@ -15,6 +15,11 @@ on:
     paths:
       - "site/**"
       - ".github/workflows/site.yml"
+  # The version badge reads releases/latest, so a published release is the one
+  # event that changes the site without touching site/. Drafts never fire this.
+  release:
+    types:
+      - published
   workflow_dispatch:
 
 permissions:

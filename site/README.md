@@ -18,7 +18,8 @@ From the repository root, the same three are `npm run site:dev`, `npm run site:b
 ## Where it is published
 
 GitHub Pages, built by `.github/workflows/site.yml` on every push to `main` that touches
-`site/`. Default URL:
+`site/`, and whenever a release is published (the version badge reads `releases/latest`).
+Default URL:
 
 ```
 https://juliendf.github.io/FinanceTrackerApp/

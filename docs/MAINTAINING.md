@@ -124,7 +124,8 @@ the normal app.
 `site/` holds two deliverables that ship together: the landing page
 (`site/src/pages/index.astro`) and the user guide (`site/src/content/docs/`, Astro +
 Starlight). `.github/workflows/site.yml` builds and publishes it to GitHub Pages on any
-push to `main` that touches `site/`. `site/README.md` covers the commands, the base-path
+push to `main` that touches `site/`, and when a release is published — the version badge
+reads `releases/latest`, so the site has to rebuild once the new release goes live. `site/README.md` covers the commands, the base-path
 rewrite, the custom-domain setup and how to add a page.
 
 Two rules:
