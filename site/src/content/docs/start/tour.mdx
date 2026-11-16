@@ -3,6 +3,8 @@ title: A tour of the app
 description: The sidebar, the header, the notifications, and where the settings hide.
 ---
 
+import Shot from "../../../components/Shot.astro";
+
 ## The sidebar
 
 | Section | Screens | What lives there |
@@ -25,6 +27,8 @@ one used for "days since update" and for period ranges.
 If you turn the app lock on (**Settings → Security**), launch and idle time show a PIN screen
 instead of the app — no sidebar, no page behind it, nothing to tab into. `⌘⇧L` locks from
 anywhere. [The app lock](/reference/settings/#security).
+
+<Shot name="lock" alt="The lock screen: a 4-digit PIN field and an Unlock button, with nothing behind it" caption="While the lock is up no route is mounted, so there is nothing to tab into or screenshot behind it." />
 
 ## Bottom of the sidebar
 
