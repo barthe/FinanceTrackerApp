@@ -69,6 +69,10 @@ A report lists what was written: counts per entity, the elapsed time, and how ma
 moved to the Keychain. Then a toast summarises it: *"Imported 118 snapshots and 18
 assets."*
 
+**The app lock is not in the backup.** The PIN lives in the Keychain, so a restored backup
+can bring back `lock_enabled` with no PIN behind it; the next launch offers to set a new one
+or turn the lock off instead of leaving the app unusable.
+
 ## Settings-only export and import
 
 Separate from the data backup, **Settings → Export** writes the preference keys to a

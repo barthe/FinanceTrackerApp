@@ -89,6 +89,19 @@ ls "$HOME/Library/Application Support/app.financetracker/"
 **About** (bottom of the sidebar) prints the exact path. Keys are in the Keychain under
 service `app.financetracker`, account `provider:<id>`.
 
+**I forgot my PIN**
+
+It cannot be recovered, and it does not need to be. Quit the app, open **Keychain Access**,
+delete the `app.financetracker` item whose account begins with `lock:`, and reopen: the app
+offers to set a new PIN or turn the lock off. The database is untouched, because the PIN
+gates the screen and never touched the file.
+
+**The lock is on but this Mac has no PIN for it**
+
+That is the recovery path, not a fault: a restored backup, a deleted Keychain item or a new
+Mac leaves the setting on and the PIN gone. The next launch offers to set a new PIN or turn
+the lock off.
+
 **The import is blocked before it starts**
 
 The pre-flight refuses structural problems — an asset pointing at a missing institution,

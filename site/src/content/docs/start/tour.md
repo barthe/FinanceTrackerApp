@@ -20,6 +20,12 @@ Every page repeats the same pattern: an icon, a title, one line of context, the 
 and the actions that belong to that screen. The date is the app's local date — the same
 one used for "days since update" and for period ranges.
 
+## The lock screen
+
+If you turn the app lock on (**Settings → Security**), launch and idle time show a PIN screen
+instead of the app — no sidebar, no page behind it, nothing to tab into. `⌘⇧L` locks from
+anywhere. [The app lock](/reference/settings/#security).
+
 ## Bottom of the sidebar
 
 - **Version x.y.z** opens **About**: the exact build, the Tauri version, and the full path

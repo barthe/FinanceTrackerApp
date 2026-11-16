@@ -59,9 +59,10 @@ Record on the same day each month.
 
 **Is my data encrypted?**
 
-The database is a normal SQLite file, protected by the disk encryption you already use (FileVault)
-and by macOS file permissions. The app does not add a password of its own. An exported
-backup is plain JSON.
+The database is a normal SQLite file, protected by the disk encryption you already use
+(FileVault) and by macOS file permissions. The optional app lock asks for a 4-digit PIN at
+launch, but it gates the screen, not the file: the database stays plaintext. An exported
+backup is plain JSON, and the PIN is never in it — it lives in the Keychain.
 
 **Can I contribute?**
 

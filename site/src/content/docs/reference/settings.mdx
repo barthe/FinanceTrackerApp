@@ -31,6 +31,25 @@ Everything else takes effect on the screens named in its row.
 | **Theme** | Light | Light, Dark or Auto (system). Applied immediately on save |
 | **Enable Animations** | On | Turns the count-up animation on the dashboard tiles on or off (and only when macOS is not asking for reduced motion) |
 
+## Security
+
+Optional and off by default. The app lock gates the **screen**, not the file.
+
+| Control | What it does |
+|---|---|
+| **Ask for a 4-digit PIN when the app opens** | Turns the lock on or off. Turning it off asks for the current PIN, so the setting cannot be flipped by whoever sits down |
+| **Lock automatically** | Never · After 1 / 5 / 15 / 30 minutes (default 5). Counted from the last click or key, and from the moment the window lost focus |
+| **Set a PIN** / **Change PIN** | Four digits, entered twice. Changing needs the current PIN |
+| **Lock now** | Locks immediately; `⌘⇧L` does the same from anywhere |
+
+The PIN is an Argon2id hash in the macOS Keychain, scoped to the data directory: it is
+never in SQLite and never in a backup. Three wrong attempts make the app wait, doubling to
+a 60-second cap, and quitting resets the counter.
+
+**A forgotten PIN cannot be recovered.** Delete the `app.financetracker` lock item in
+Keychain Access, reopen the app, and it offers to set a new one — your data is untouched,
+because the lock never touched it. [What the lock does and does not protect](/data/privacy/#the-app-lock).
+
 ## The buttons under the form
 
 - **Save Settings** — writes every field in one transaction and toasts *"Settings saved

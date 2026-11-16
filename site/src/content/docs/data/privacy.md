@@ -40,6 +40,20 @@ Provider keys live in the **macOS Keychain**, service `app.financetracker`, acco
 - A key is bound to the endpoint it was entered for (`scheme://host:port`). Changing the
   base URL drops the key instead of sending it somewhere new.
 
+## The app lock
+
+Optional, off by default, and it protects the screen rather than the file. The PIN is an
+**Argon2id hash in the Keychain** — service `app.financetracker`, account derived from a
+digest of the database path, so the demo build and the normal build never share one. There
+is no command that returns the hash to the page, and no copy of it in SQLite.
+
+`settings` carries two rows about it: whether the lock is on, and the idle delay.
+
+**It does not encrypt anything.** `financetracker.db` stays plaintext SQLite, so anyone who
+can read the data directory can open the file instead of the app. Four digits is a
+deterrent for a person at an unlocked keyboard; encrypting the database is a separate,
+open problem.
+
 ## The complete list of outbound requests
 
 | Request | When | What is sent |
