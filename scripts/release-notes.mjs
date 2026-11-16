@@ -44,6 +44,31 @@ const PREAMBLE =
   "change behaviour without notice. Take a backup from Settings → Data & Backup before " +
   "importing real data.";
 
+/**
+ * GitHub renders a release body line by line: a newline inside a paragraph or a list
+ * item becomes a line break, unlike a comment. The changelog is hard-wrapped at 80
+ * columns for editing, so every sentence used to stop mid-width on the release page.
+ * Joining the continuation lines back into one line per paragraph and per bullet lets
+ * the page wrap the text itself.
+ */
+function unwrap(section) {
+  return section
+    .split(/\n{2,}/)
+    .map((block) => {
+      const out = [];
+      for (const line of block.split("\n").map((l) => l.trim())) {
+        if (!line) continue;
+        const startsItem = /^([-*]|\d+\.)\s/.test(line);
+        if (startsItem || out.length === 0) out.push(line);
+        else if (/^(\||>|#|:::)/.test(line)) out.push(line);
+        else out[out.length - 1] += ` ${line}`;
+      }
+      return out.join("\n");
+    })
+    .join("\n\n");
+}
+
+
 const ABOUT = `## The app
 
 A native macOS app for tracking assets and their value over time.
@@ -52,4 +77,4 @@ Everything stays on your Mac: a local SQLite database, provider API keys in the 
 
 Requires macOS 11+ on Apple silicon. The build is signed ad hoc (no Apple Developer ID yet), so macOS blocks the first launch: allow it in System Settings → Privacy & Security → **Open Anyway**, or right-click the app → **Open** on macOS 14 and older. The terminal equivalent is \`xattr -dr com.apple.quarantine /Applications/FinanceTracker.app\`, which does the same thing for a copy you trust. Later updates arrive through **Check for updates** in Settings → **General**.`;
 
-process.stdout.write(`${PREAMBLE}\n\n## What's new in ${version}\n\n${section}\n\n${ABOUT}\n`);
+process.stdout.write(`${PREAMBLE}\n\n## What's new in ${version}\n\n${unwrap(section)}\n\n${ABOUT}\n`);
