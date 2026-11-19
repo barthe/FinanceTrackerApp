@@ -20,6 +20,11 @@ on:
   release:
     types:
       - published
+  # Checks a site change without deploying it.
+  pull_request:
+    paths:
+      - "site/**"
+      - ".github/workflows/site.yml"
   workflow_dispatch:
 
 permissions:
@@ -63,13 +68,17 @@ jobs:
         env:
           SITE_BASE: ${{ vars.SITE_BASE || '/FinanceTrackerApp' }}
 
+      # A pull request builds and link-checks, then stops here.
       - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request'
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
         with:
           path: site/dist
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

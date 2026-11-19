@@ -7,7 +7,15 @@ on:
   push:
     branches:
       - main
+    # Docs and site changes are checked by the site workflow: a full typecheck
+    # plus cargo suite on a paragraph edit is 10 minutes of nothing.
+    paths-ignore:
+      - "site/**"
+      - "**.md"
   pull_request:
+    paths-ignore:
+      - "site/**"
+      - "**.md"
 
 permissions:
   contents: read
