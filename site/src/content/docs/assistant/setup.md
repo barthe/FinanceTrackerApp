@@ -69,12 +69,28 @@ A native confirmation appears when a provider's endpoint changes, or when a bran
 non-local endpoint is added. It states the origin and warns that your questions and the
 figures the assistant looks up are sent there. Loopback addresses never ask.
 
-## Choosing a local model
+## Choosing a model
 
 Tool calling is the requirement: the model must emit structured calls, not just prose. Any
 model that does so through an OpenAI-compatible endpoint works — ask it one question about
 your data and watch whether a tool row appears. At the time of writing, `qwen3.5:4b` and
 `ministral-3:8b` do; `qwen2.5-coder:14b` does not.
+
+**If your machine is capable enough, start local.** Nothing leaves the Mac and nothing is
+billed per request, so it costs nothing to experiment: try several 8B and 27B models with
+tool-calling support and keep whichever answers you like. A 4B–8B model is enough for
+lookups and arithmetic; larger models write better prose but take longer per turn.
+
+**If a local model is not enough — or not an option — choose a hosted provider with a Zero
+Data Retention policy.** ZDR means the provider stores, logs and trains on none of what you
+send: messages, balances, asset names, notes. It is typically a paid-tier promise; free
+tiers generally use the traffic to train their models, and this app sends real financial
+figures with every request (see [what it can see](/assistant/what-it-knows/)). Check the
+provider's data-retention page before you enter the key, not after.
+
+Whatever you pick, the endpoint must speak the **OpenAI-compatible API** — a base URL that
+answers `/models` and `/chat/completions` — and accept an API key. The only exception is a
+keyless local endpoint such as Ollama or LM Studio on your own Mac.
 
 Practical notes:
 

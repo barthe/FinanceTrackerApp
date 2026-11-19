@@ -2,7 +2,7 @@
 
 A native macOS app for tracking assets and their value over time. Single user, offline, data stays on your Mac.
 
-Version 0.7.2 · MIT · macOS 11+ (Apple silicon)
+Version 0.7.2 · MIT · macOS 11+ (Apple silicon) · [User guide](https://juliendf.github.io/FinanceTrackerApp/)
 
 > It started as a replacement for a Google Sheet: one number — what is my wealth today,
 > and how did it move? Not a budget, not an expense tracker, and no bank connectors,
@@ -145,7 +145,9 @@ Chat is off until you enable it under Settings → LLM Providers. For a local mo
 2. Tick **Enable AI features** on the same page (it sits above the provider list).
 3. Chat. Write actions (recording a snapshot, saving a memory) always appear as a card you confirm or reject. The same page has *Stream answers as they arrive*; turn it off to get a spinner (which names the tool it is running) and the whole reply at once.
 
-Keys live in the macOS Keychain, never in the database or a backup.
+Keys live in the macOS Keychain, never in the database or a backup. Hosted providers and
+data retention are covered in the guide's
+[assistant setup](https://juliendf.github.io/FinanceTrackerApp/assistant/setup/).
 
 ## Your data
 
