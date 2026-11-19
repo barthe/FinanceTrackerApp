@@ -71,10 +71,10 @@ figures the assistant looks up are sent there. Loopback addresses never ask.
 
 ## Choosing a model
 
-Tool calling is the requirement: the model must emit structured calls, not just prose. Any
-model that does so through an OpenAI-compatible endpoint works — ask it one question about
-your data and watch whether a tool row appears. At the time of writing, `qwen3.5:4b` and
-`ministral-3:8b` do; `qwen2.5-coder:14b` does not.
+Tool calling is the requirement: the model must emit structured calls, not just prose. No
+model name is listed here on purpose — the list of models that call tools correctly changes
+monthly. Ask the model one question about your data and watch for a tool row: if you get
+prose and no lookup, it cannot drive the assistant.
 
 **If your machine is capable enough, start local.** Nothing leaves the Mac and nothing is
 billed per request, so it costs nothing to experiment: try several 8B and 27B models with

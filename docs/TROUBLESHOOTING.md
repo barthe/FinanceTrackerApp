@@ -109,8 +109,9 @@ skipped by the history repair, so start a new chat rather than retrying one.
 **The model answers in text instead of calling a tool**
 
 Some models do not emit structured tool calls through the OpenAI-compatible
-endpoint. `qwen2.5-coder:14b` is one; `qwen3.5:4b` and `ministral-3:8b` work.
-The model must also be listed by `Fetch models` on the provider form.
+endpoint: code-completion models usually cannot, general-purpose instruct models
+usually can. Ask a question that needs a lookup and watch for a tool row. The
+model must also be listed by `Fetch models` on the provider form.
 
 **"The saved API key belongs to …, but this provider now points at …"**
 

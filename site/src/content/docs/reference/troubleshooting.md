@@ -50,8 +50,9 @@ no API key.
 
 **The model answers in text and never reads my data**
 
-It does not support tool calls through the OpenAI-compatible endpoint.
-`qwen2.5-coder:14b` is one such model; `qwen3.5:4b` and `ministral-3:8b` work. The model must
+It does not support tool calls through the OpenAI-compatible endpoint. Models built for
+code completion are the usual culprits; general-purpose instruct models are the usual fix.
+Test it by asking something that needs a lookup and watching for a tool row. The model must
 also be ticked under **Load models** on the provider form.
 
 **`400 INVALID_ARGUMENT` from Gemini, a Stop button that does nothing, or a blank job title**

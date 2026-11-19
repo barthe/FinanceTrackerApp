@@ -141,7 +141,7 @@ python3 tests/roundtrip/compare.py ORIGINAL.db REBUILT.db
 
 Chat is off until you enable it under Settings → LLM Providers. For a local model:
 
-1. Settings → LLM Providers → New Provider: base URL `http://localhost:11434/v1`, no key. Press **Load models**, then enable the ones chat may use (a tool-capable one, e.g. `qwen3.5:4b`) and pick the default.
+1. Settings → LLM Providers → New Provider: base URL `http://localhost:11434/v1`, no key. Press **Load models**, then enable the ones chat may use — a model that supports tool calling, which you can check by asking it something that needs a lookup — and pick the default.
 2. Tick **Enable AI features** on the same page (it sits above the provider list).
 3. Chat. Write actions (recording a snapshot, saving a memory) always appear as a card you confirm or reject. The same page has *Stream answers as they arrive*; turn it off to get a spinner (which names the tool it is running) and the whole reply at once.
 
